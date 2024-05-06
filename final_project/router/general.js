@@ -12,31 +12,55 @@ public_users.post("/register", (req,res) => {
 
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
-  //Write your code here
+    res.json(books);
   return res.status(300).json({message: "Yet to be implemented"});
 });
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
-  //Write your code here
+    const { isbn } = req.params;
+    const book = books[isbn];
+    if (book) {
+        res.json(book);
+    } else {
+        res.status(404).json({ message: "Book not found" });
+    }
   return res.status(300).json({message: "Yet to be implemented"});
  });
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
-  //Write your code here
+    const { author } = req.params;
+    const booksByAuthor = Object.values(books).filter(book => book.author === author);
+    if (booksByAuthor.length > 0) {
+        res.json(booksByAuthor);
+    } else {
+        res.status(404).json({ message: "Books by this author not found" });
+    }
   return res.status(300).json({message: "Yet to be implemented"});
 });
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
-  //Write your code here
+    const { title } = req.params;
+    const booksWithTitle = Object.values(books).filter(book => book.title === title);
+    if (booksWithTitle.length > 0) {
+        res.json(booksWithTitle);
+    } else {
+        res.status(404).json({ message: "Books with this title not found" });
+    }
   return res.status(300).json({message: "Yet to be implemented"});
 });
 
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
-  //Write your code here
+    const { isbn } = req.params;
+    const book = books[isbn];
+    if (book && book.reviews) {
+        res.json(book.reviews);
+    } else {
+        res.status(404).json({ message: "Reviews for this book not found" });
+    }
   return res.status(300).json({message: "Yet to be implemented"});
 });
 
