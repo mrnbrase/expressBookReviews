@@ -120,7 +120,7 @@ public_users.get('/title/:title', function (req, res) {
   }
 });
 
-// Get book review
+
 public_users.get('/review/:isbn', function (req, res) {
   const { isbn } = req.params;
   const book = books[isbn];
